@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linuli's Birthday Gift 💗</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #fff0f5;
+    font-family: Georgia, serif;
+    color: #70465b;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+.card {
+    background: #fffafc;
+    width: 100%;
+    max-width: 540px;
+    padding: 35px 24px;
+    border: 2px solid #f4c6d7;
+    border-radius: 24px;
+    box-shadow: 0 8px 25px #d99bb533;
+    margin: 20px auto 40px;
+}
+
+.heart { font-size: 42px; }
+
+h1 { color: #c45b83; font-size: 30px; }
+h2 { color: #b45d81; font-size: 23px; }
+
+p {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.eyebrow {
+    color: #b87994;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.tiny-hearts {
+    color: #e6a1bc;
+    font-size: 18px;
+    letter-spacing: 4px;
+}
+
+.note {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #ad7890;
+}
+
+.stamp {
+    display: inline-block;
+    margin: 12px 0;
+    padding: 8px 12px;
+    border: 1px dashed #e6a1bc;
+    border-radius: 8px;
+    color: #b87994;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+
+#secretMessage, .personal-note {
+    background: #fff0f5;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 18px;
+    color: #a34c72;
+}
+
+button {
+    background: #d9789c;
+    color: white;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 30px;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #bd5d82;
+    transform: translateY(-2px);
+}
+
+.quiz-card { background: #fff5f8; }
+
+.answer-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    max-width: 360px;
+    margin: 20px auto;
+}
+
+.answer-list button {
+    width: 100%;
+    margin: 0;
+}
+
+.answer-list button.selected {
+    background: #8f4968;
+    outline: 2px solid #e6a1bc;
+}
+
+.quiz-button { background: #b87994; }
+
+#quizArea, #resultsArea, #secretMessage {
+    display: none;
+}
+
+.progress-track {
+    height: 7px;
+    background: #f4dce6;
+    border-radius: 20px;
+    margin: 18px 0;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 12.5%;
+    background: #d9789c;
+    transition: width 0.3s;
+}
+
+.result-item {
+    background: #fffafc;
+    border: 1px solid #f1cddd;
+    border-radius: 16px;
+    padding: 18px;
+    margin: 15px 0;
+    text-align: left;
+}
+
+.result-item h3 {
+    color: #b45d81;
+    margin-top: 0;
+}
+
+.result-item p { font-size: 15px; }
+
+.movie-area {
+    background: #fff0f5;
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 25px;
+}
+
+video {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.small-note {
+    font-size: 12px;
+    color: #ad7890;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BIRTHDAY INTRODUCTION -->
+<div class="card">
+    <div class="heart">♡</div>
+    <div class="tiny-hearts">♡ &nbsp; ✧ &nbsp; ♡</div>
+
+    <p class="eyebrow">A little something for you ♡</p>
+    <h1>The Linuli &amp; Pituli Files</h1>
+
+    <p>
+        Six years of friendship,<br>
+        countless memories,<br>
+        and one very special birthday.
+    </p>
+
+    <div class="stamp">EST. 2020 · FOREVER IN PROGRESS</div>
+    <br>
+
+    <button onclick="revealMessage()">
+        Open your little surprise ♡
+    </button>
+
+    <p id="secretMessage">
+        Out of all the people in this world,
+        I'm so glad I got you, Linuli. 💗
+    </p>
+
+    <div class="note">Made with love, just for you. ♡</div>
+</div>
+
+<!-- QUIZ -->
+<div class="card quiz-card">
+    <div class="heart">✧</div>
+    <div class="tiny-hearts">♡ &nbsp; ✧ &nbsp; ♡</div>
+
+    <p class="eyebrow">THE PERSONALITY FILES</p>
+    <h1>How well do you know yourself? ♡</h1>
+
+    <p>
+        Eight little questions,<br>
+        two perspectives,<br>
+        and one very special birthday surprise.
+    </p>
+
+    <button id="startButton" class="quiz-button" onclick="startQuiz()">
+        Begin the investigation ♡
+    </button>
+
+    <div id="quizArea">
+        <p class="eyebrow" id="questionCounter">QUESTION 01 OF 08</p>
+
+        <div class="progress-track">
+            <div id="progressBar"></div>
+        </div>
+
+        <h2 id="questionTitle">First things first… ♡</h2>
+        <p id="questionText"></p>
+
+        <div id="answerOptions" class="answer-list"></div>
+
+        <p id="answerFeedback" aria-live="polite"></p>
+
+        <button id="nextButton" class="quiz-button" onclick="nextQuestion()">
+            Next question ♡
+        </button>
+    </div>
+
+    <!-- FINAL COMPARISON AND MOVIE -->
+    <div id="resultsArea">
+        <h2>Your personality files are complete! ♡</h2>
+        <p>Now let's see how your answers compare with Pituli's predictions.</p>
+
+        <div id="resultsList"></div>
+
+        <div class="movie-area">
+            <div class="heart">🎬</div>
+            <p class="eyebrow">YOUR FINAL SURPRISE</p>
+            <h2>One last thing, Linuli… ♡</h2>
+            <p>A little movie made just for you.</p>
+
+           
+<div class="movie-reveal">
+    <h2>And now… a little something for you, Linuli ♡</h2>
+
+    <p>
+        Okay, miss main character, you've officially survived
+        my very questionable little quiz. 😭💗
+    </p>
+
+    <p>
+        But jokes aside, there's something I've wanted to give you—
+        a little something that words alone couldn't quite explain.
+    </p>
+
+    <p>
+        You know how some people become a part of your life, and
+        somewhere along the way, they become a part of your favourite
+        memories, your random thoughts, and your laughter?
+    </p>
+
+    <p>Well, that's you for me, gurl. ♡</p>
+
+    <p>
+        Since I can't put our entire friendship in a box, tie it
+        with a ribbon, and hand it to you (although that would be
+        iconic), I made you this instead.
+    </p>
+
+    <p>
+        So, my darling, get comfortable. For a few minutes, let
+        yourself be the main character without overthinking a
+        single thing.
+    </p>
+
+    <p>
+        <strong>
+            Happy birthday to my fallen angel, my favourite human,
+            and my forever main character. 
+        </strong>
+    </p>
+
+    <p><em>Now press play, you menace. I love you. ♡</em></p>
+</div>
+
+<video controls preload="metadata">
+    <source src="birthday-movie.mp4" type="video/mp4">
+    Your browser cannot play this video.
+</video>
+
+            <p class="small-note">
+                Made with love, from Pituli to Linuli. 💗
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+function revealMessage() {
+    document.getElementById("secretMessage").style.display = "block";
+}
+
+/*
+  PERSONALIZE LATER:
+  Replace each prediction with the answer YOU think Linuli will choose.
+  Replace each explanation with your own personal reason.
+*/
+const questions = [
+    {
+        title: "First things first… ♡",
+        text: "How would you describe yourself?",
+        options: [
+            "Soft-hearted",
+            "Chaotic",
+            "Independent",
+            "A little of everything"
+        ],
+        prediction: "Soft-hearted",
+explanation: "You might be crazy and chaotic sometimes, but deep down, you're such a soft-hearted person. There's something almost monk-like about you—calm in your own way, thoughtful, and someone who feels things deeply. Beneath all that madness is a heart that's incredibly gentle, and that's one of the things that makes you, you. ♡"
+    },
+    {
+        title: "A little dangerous, aren't we? ♡",
+        text: "What is your most dangerous quality?",
+        options: [
+            "Overthinking",
+            "Being too honest",
+            "Looking innocent",
+            "A little of everything"
+        ],
+        prediction: "Overthinking",
+explanation: "Gurl, WHY do you overthink every little thing about yourself?! 😭 Like, have you SEEN yourself? You're genuinely one of the most perfect humans I've ever seen, and yet somehow you're always finding something to worry about. I wish you could see yourself through my eyes just once, because maybe then you'd understand how wonderful you actually are. You spend so much time questioning yourself when there's so much about you to love. Please be a little kinder to yourself, Linuli. Your brain needs to take a vacation sometimes. 😭🤍"
+    },
+    {
+        title: "Main character energy ✨",
+        text: "Which fictional character archetype feels most like you?",
+        options: [
+            "The quiet observer",
+            "The chaotic comedian",
+            "The caring protector",
+            "The unpredictable main character"
+        ],
+        prediction: "The unpredictable main character",
+explanation: "Girl, do I even need to explain myself? 😭 As I ALWAYS say, YOU ARE THE MAIN CHARACTER. ALL CAP. No debate, no arguments, case closed. You have the chaos, the emotions, the overthinking, the softness, the mysterious monk moments—literally the whole package. Why settle for one fictional-character archetype when you could be the entire cast? And if your life were a series, I'd absolutely be seated for every episode, every plot twist, and every unnecessarily dramatic season finale. Now go on, main character. The universe is waiting. 👑💗"
+    },
+    {
+        title: "Be honest with yourself 💅",
+        text: "How would you rate your own beauty?",
+        options: [
+            "Absolutely gorgeous",
+            "Cute without trying",
+            "Pretty and I know it",
+            "Beauty is subjective"
+        ],
+        prediction: "Absolutely gorgeous",
+explanation: "ABSOLUTELY GORGEOUS. OH, MAN. GIRL, YOU ARE A FALLEN ANGEL, MY GURL, MY DARLIN. 😭💗 Sometimes I genuinely wonder how you can look at yourself and notice your flaws before seeing even a fraction of the beauty you carry. And I'm not talking about your face alone—it's your whole existence, the way you are, the person you are. Your beauty is dangerous, girl, the kind that makes the world want a piece of you. But I hope you always remember that you deserve more than to be admired. You deserve to be cherished, understood, and loved gently. And while the world may notice your beauty, I will always be here to cherish the person behind it. You don't have to be perfect to be precious to me, Linuli. You already are. 🪽💗"
+    },
+    {
+        title: "The friendship files ♡",
+        text: "Which best describes Pituli's place in your life?",
+        options: [
+            "My personal therapist",
+            "My partner in chaos",
+            "My safe place",
+            "Annoying, but irreplaceable"
+        ],
+        prediction: "Annoying, but irreplaceable",
+        explanation: "hehe, I know I am annoying and given you headache but I lob you"
+    },
+    {
+        title: "The Mikuni investigation 🐒",
+        text: "Which category best describes Mikuni in your personal universe?",
+        options: [
+            "Hagura",
+            "Tolerable creature",
+            "Weirdly adorable",
+            "Duniya ra sabu thu bada MG",
+            "An unsolved mystery"
+        ],
+        prediction: "Hagura",
+        explanation: "se hagura ta lo..."
+    },
+    {
+        title: "Behind the scenes…",
+        text: "When life gets difficult, what do you usually do?",
+        options: [
+            "Think about everything",
+            "Pretend I'm fine",
+            "Talk to someone I trust",
+            "Handle it in my own way"
+        ],
+          prediction: "Pretend I'm fine",
+explanation: "Gurl, you do this way too often, you know that? You act like you're fine, carry everything quietly, and somehow expect yourself to deal with it all without letting anyone see when you're hurting. But, my darling, you don't always have to be the strong one. You don't have to put on a brave face with me or pretend that everything is okay when it isn't. You can cry, rant, overthink, be a complete mess—whatever you need. I'll listen. I might not always have the perfect words to make things better, but I'll be here to listen and remind you that you don't have to face everything alone. You deserve the same love and comfort you so freely give to others. So please, Linuli, when life gets heavy, remember that you have me, too. You don't have to be okay all the time. ♡"
+    },
+    {
+        title: "One last question, Linuli ♡",
+        text: "What is your greatest superpower as a friend?",
+        options: [
+            "Always showing up",
+            "Making people laugh",
+            "Listening without judging",
+            "Loving people wholeheartedly"
+        ],
+      prediction: "Loving people wholeheartedly",
+explanation: "Gurl, you are who you are, and THAT is exactly what I love about you. You don't have to pretend to be someone else or change yourself to deserve love. There's something so beautiful about the way you care for people, the way you give love so genuinely, and the way you make people feel like they matter. Sometimes I genuinely wonder if you're even human, because how can someone have a heart that soft? 😭 You're like an angel who loves people so wholeheartedly, without making them feel like they have to earn your kindness. And I hope you know that the world needs more people like you. Please never lose that beautiful part of yourself, my darling. Never let this world convince you that having a soft heart is a weakness. It's your superpower. And if I could wish one thing for you, it would be that you receive the same beautiful love you give to everyone else. You deserve that, Linuli. Always. 🪽💗"
+    }
+];
+
+let currentQuestion = 0;
+const quizAnswers = {};
+
+function startQuiz() {
+    document.getElementById("startButton").style.display = "none";
+    document.getElementById("quizArea").style.display = "block";
+    showQuestion();
+}
+
+function showQuestion() {
+    const q = questions[currentQuestion];
+
+    document.getElementById("questionCounter").textContent =
+        "QUESTION " + String(currentQuestion + 1).padStart(2, "0") +
+        " OF 08";
+
+    document.getElementById("progressBar").style.width =
+        ((currentQuestion + 1) / questions.length * 100) + "%";
+
+    document.getElementById("questionTitle").textContent = q.title;
+    document.getElementById("questionText").textContent = q.text;
+    document.getElementById("answerFeedback").textContent = "";
+
+    const optionsArea = document.getElementById("answerOptions");
+    optionsArea.innerHTML = "";
+
+    q.options.forEach(function(answer) {
+        const button = document.createElement("button");
+        button.textContent = answer;
+        button.type = "button";
+
+        if (quizAnswers["q" + currentQuestion] === answer) {
+            button.classList.add("selected");
+        }
+
+        button.onclick = function() {
+            chooseAnswer(answer);
+        };
+
+        optionsArea.appendChild(button);
+    });
+
+    document.getElementById("nextButton").textContent =
+        currentQuestion === questions.length - 1
+        ? "Reveal the files ♡"
+        : "Next question ♡";
+}
+
+function chooseAnswer(answer) {
+    quizAnswers["q" + currentQuestion] = answer;
+
+    document.querySelectorAll("#answerOptions button").forEach(function(button) {
+        button.classList.toggle("selected", button.textContent === answer);
+    });
+
+    document.getElementById("answerFeedback").textContent =
+        "Saved! You can change your answer if you want. ♡";
+}
+
+function nextQuestion() {
+    if (quizAnswers["q" + currentQuestion] === undefined) {
+        document.getElementById("answerFeedback").textContent =
+            "Choose an answer first, Linuli! ♡";
+        return;
+    }
+
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        showQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById("quizArea").style.display = "none";
+    document.getElementById("resultsArea").style.display = "block";
+
+    const resultsList = document.getElementById("resultsList");
+    resultsList.innerHTML = "";
+
+    questions.forEach(function(q, index) {
+        const answer = quizAnswers["q" + index];
+        const prediction = q.prediction.trim();
+
+        const item = document.createElement("div");
+        item.className = "result-item";
+
+        const heading = document.createElement("h3");
+        heading.textContent = (index + 1) + ". " + q.text;
+        item.appendChild(heading);
+
+        const herAnswer = document.createElement("p");
+        herAnswer.textContent = "Linuli's answer: " + answer;
+        item.appendChild(herAnswer);
+
+        const predicted = document.createElement("p");
+
+        if (prediction !== "") {
+            predicted.textContent = "Pituli predicted: " + prediction;
+            item.appendChild(predicted);
+
+            const comparison = document.createElement("p");
+            comparison.textContent =
+                answer.toLowerCase() === prediction.toLowerCase()
+                ? "♡ Pituli knows you pretty well!"
+                : "♡ A little plot twist! You saw yourself differently.";
+            item.appendChild(comparison);
+        } else {
+            predicted.textContent =
+                "Pituli's prediction: Not filled in yet.";
+            item.appendChild(predicted);
+        }
+
+        const explanation = document.createElement("p");
+        explanation.className = "personal-note";
+        explanation.textContent = q.explanation;
+        item.appendChild(explanation);
+
+        resultsList.appendChild(item);
+    });
+
+    document.getElementById("resultsArea").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+</script>
+
+</body>
+</html>
